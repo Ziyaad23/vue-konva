@@ -53,7 +53,7 @@
       </div>
     </div>
     <div>
-      <v-stage ref="stage" :config="configKonva">
+      <v-stage :config="configKonva">
         <v-layer>
           <v-line
             v-for="hl in hlines"
@@ -85,7 +85,7 @@
                 width: 50,
                 height: blockSnapSize * input1,
                 fill: '#4472c4',
-                shadowBlur: 2,
+                shadowBlur: 3,
               }"
             />
             <v-rect
@@ -95,7 +95,7 @@
                 width: 50,
                 height: blockSnapSize * input2,
                 fill: '#4472c4',
-                shadowBlur: 2,
+                shadowBlur: 3,
               }"
             />
             <v-rect
@@ -105,7 +105,7 @@
                 width: 50,
                 height: blockSnapSize * input3,
                 fill: '#4472c4',
-                shadowBlur: 2,
+                shadowBlur: 3,
               }"
             />
           </v-group>
@@ -117,7 +117,7 @@
 
 <script>
 const width = 300;
-const height = 250;
+const height = 350;
 export default {
   data() {
     return {
@@ -137,12 +137,11 @@ export default {
       labelY: 0,
       labelX: 0,
       highestValue: 10,
-      lowestValue: -1,
+      lowestValue: -2,
       total: 0,
     };
   },
   computed() {},
-  methods: {},
   mounted() {
     let padding = this.blockSnapSize;
     let labelPosition = 0;
@@ -156,7 +155,7 @@ export default {
       });
     }
 
-    for (var j = 0; j < height / padding; j++) {
+    for (var j = this.lowestValue - 1; j < this.highestValue; j++) {
       this.yaxis.push({
         id: Math.round(Math.random() * 999).toString(),
         labelX: 0,
