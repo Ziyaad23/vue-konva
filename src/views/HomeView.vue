@@ -1,70 +1,123 @@
 <template>
-  <div>
-    <v-stage ref="stage" :config="configKonva">
-      <v-layer>
-        <v-line
-          v-for="hl in hlines"
-          :key="hl.id"
-          :config="{
-            id: hl.id,
-            points: hl.points,
-            stroke: 'lightgrey',
-            strokeWidth: 0.3,
-          }"
-        ></v-line>
-        <v-text
-          v-for="t1 in yaxis"
-          :key="t1.id"
-          :config="{
-            id: t1.id,
-            x: t1.labelX,
-            y: t1.labelY,
-            text: t1.labelText,
-            fontSize: 10,
-            fontFamily: 'Calibri',
-            fill: 'black',
-          }"
-        ></v-text>
-        <v-group>
-          <v-rect
+  <div class="container mx-auto">
+    <div class="grid grid-cols-1 gap-1 sm:grid-cols-3">
+      <div>
+        <label class="form-label inline-block mb-2 text-gray-700"
+          >Chart 1 input</label
+        >
+        <input
+          type="number"
+          class="form-control block px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:outline-none"
+          v-model="input1"
+        />
+      </div>
+      <div>
+        <label class="form-label inline-block mb-2 text-gray-700"
+          >Chart 2 input</label
+        >
+        <input
+          type="number"
+          class="form-control block px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:outline-none"
+          v-model="input2"
+        />
+      </div>
+      <div>
+        <label class="form-label inline-block mb-2 text-gray-700"
+          >Chart 3 input</label
+        >
+        <input
+          type="number"
+          class="form-control block px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:outline-none"
+          v-model="input3"
+        />
+      </div>
+      <div>
+        <label class="form-label inline-block mb-2 text-gray-700"
+          >Highest value</label
+        >
+        <input
+          type="number"
+          class="form-control block px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:outline-none"
+          v-model="highestValue"
+        />
+      </div>
+      <div>
+        <label class="form-label inline-block mb-2 text-gray-700"
+          >Lowest value</label
+        >
+        <input
+          type="number"
+          class="form-control block px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:outline-none"
+          v-model="lowestValue"
+        />
+      </div>
+    </div>
+    <div>
+      <v-stage ref="stage" :config="configKonva">
+        <v-layer>
+          <v-line
+            v-for="hl in hlines"
+            :key="hl.id"
             :config="{
-              x: 40,
-              y: 20,
-              width: 50,
-              height: blockSnapSize * input1,
-              fill: '#4472c4',
-              shadowBlur: 2,
+              id: hl.id,
+              points: hl.points,
+              stroke: 'lightgrey',
+              strokeWidth: 0.3,
             }"
-          />
-          <v-rect
+          ></v-line>
+          <v-text
+            v-for="t1 in yaxis"
+            :key="t1.id"
             :config="{
-              x: 120,
-              y: total - input2 * blockSnapSize,
-              width: 50,
-              height: blockSnapSize * input2,
-              fill: '#4472c4',
-              shadowBlur: 2,
+              id: t1.id,
+              x: t1.labelX,
+              y: t1.labelY,
+              text: t1.labelText,
+              fontSize: 10,
+              fill: 'black',
             }"
-          />
-          <v-rect
-            :config="{
-              x: 200,
-              y: total - input3 * blockSnapSize,
-              width: 50,
-              height: blockSnapSize * input3,
-              fill: '#4472c4',
-              shadowBlur: 2,
-            }"
-          />
-        </v-group>
-      </v-layer>
-    </v-stage>
+          ></v-text>
+          <v-group>
+            <v-rect
+              :config="{
+                x: 40,
+                y: total - input1 * blockSnapSize,
+                width: 50,
+                height: blockSnapSize * input1,
+                fill: '#4472c4',
+                shadowBlur: 2,
+              }"
+            />
+            <v-rect
+              :config="{
+                x: 120,
+                y: total - input2 * blockSnapSize,
+                width: 50,
+                height: blockSnapSize * input2,
+                fill: '#4472c4',
+                shadowBlur: 2,
+              }"
+            />
+            <v-rect
+              :config="{
+                x: 200,
+                y: total - input3 * blockSnapSize,
+                width: 50,
+                height: blockSnapSize * input3,
+                fill: '#4472c4',
+                shadowBlur: 2,
+              }"
+            />
+          </v-group>
+        </v-layer>
+      </v-stage>
+    </div>
   </div>
 </template>
 
 <script>
 const width = 300;
-const height = 270;
+const height = 250;
 export default {
   data() {
     return {
@@ -73,21 +126,18 @@ export default {
         width: width,
         height: height,
       },
-      input1: 10,
+      input1: 8,
       input2: 6,
       input3: 1,
       blockSnapSize: 20,
       vlines: [],
       hlines: [],
       yaxis: [],
-      x: 0,
-      y: 0,
       charts: [],
       labelY: 0,
       labelX: 0,
       highestValue: 10,
-      lowestValue: -2,
-      startingValue: 0,
+      lowestValue: -1,
       total: 0,
     };
   },
