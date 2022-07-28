@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto">
-    <div class="grid grid-cols-1 gap-1 sm:grid-cols-3">
+    <div class="grid grid-cols-1 gap-1 mb-10 sm:grid-cols-3">
       <div>
         <label class="form-label inline-block mb-2 text-gray-700"
           >Chart 1 input</label
@@ -116,6 +116,7 @@
 </template>
 
 <script>
+//Konva layout
 const width = 300;
 const height = 350;
 export default {
@@ -130,10 +131,8 @@ export default {
       input2: 6,
       input3: 1,
       blockSnapSize: 20,
-      vlines: [],
       hlines: [],
       yaxis: [],
-      charts: [],
       labelY: 0,
       labelX: 0,
       highestValue: 10,
@@ -141,28 +140,42 @@ export default {
       total: 0,
     };
   },
-  computed() {},
+  methods: {
+    renderChart() {
+      let padding = this.blockSnapSize;
+      let labelPosition = 0;
+      let label = this.highestValue + 1;
+      this.total = this.highestValue * this.blockSnapSize + this.blockSnapSize;
+
+      //Display horizontal line
+      for (var j = 0; j < height / padding; j++) {
+        this.hlines.push({
+          id: crypto.randomUUID().slice(0, 6),
+          points: [0, Math.round(j * padding), width, Math.round(j * padding)],
+        });
+      }
+
+      //Display label on y-axis
+      for (var j = this.lowestValue - 1; j < this.highestValue; j++) {
+        this.yaxis.push({
+          id: crypto.randomUUID().slice(0, 6),
+          labelX: 0,
+          labelY: (labelPosition += padding),
+          labelText: (label -= 1),
+        });
+      }
+    },
+  },
   mounted() {
-    let padding = this.blockSnapSize;
-    let labelPosition = 0;
-    let label = this.highestValue + 1;
-    this.total = this.highestValue * this.blockSnapSize + this.blockSnapSize;
-
-    for (var j = 0; j < height / padding; j++) {
-      this.hlines.push({
-        id: Math.round(Math.random() * 999).toString(),
-        points: [0, Math.round(j * padding), width, Math.round(j * padding)],
-      });
-    }
-
-    for (var j = this.lowestValue - 1; j < this.highestValue; j++) {
-      this.yaxis.push({
-        id: Math.round(Math.random() * 999).toString(),
-        labelX: 0,
-        labelY: (labelPosition += padding),
-        labelText: (label -= 1),
-      });
-    }
+    this.renderChart();
+  },
+  updated() {
+    //Reset values
+    (this.hlines = []),
+      (this.yaxis = []),
+      (this.labelY = 0),
+      (this.labelX = 0),
+      this.renderChart();
   },
 };
 </script>
