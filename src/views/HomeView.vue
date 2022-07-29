@@ -1,6 +1,6 @@
 <template>
-  <div class="container mx-auto">
-    <div class="grid grid-cols-1 gap-1 mb-10 sm:grid-cols-3">
+  <div class="container mx-auto p-10">
+    <div class="grid grid-cols-1 gap-4 mb-10 sm:grid-cols-3">
       <div>
         <label class="form-label inline-block mb-2 text-gray-700"
           >Chart 1 input</label
@@ -167,15 +167,17 @@ export default {
     },
   },
   mounted() {
+    //Render chart
     this.renderChart();
   },
   updated() {
     //Reset values
-    (this.hlines = []),
-      (this.yaxis = []),
-      (this.labelY = 0),
-      (this.labelX = 0),
-      this.renderChart();
+    this.hlines = [];
+    this.yaxis = [];
+    this.labelY = 0;
+    this.labelX = 0;
+    //Re render chart
+    this.renderChart();
   },
 };
 </script>
